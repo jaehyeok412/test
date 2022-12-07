@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" content="width-device-width, initial-scale-1">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button onclick="movehome(120,250,330,0,0,0)">home(Beta)</button>
+
+    <canvas id="canvas" width="1200" height="650"></canvas>
+    
+    
+    <!-- <button onclick="doSomething()">home</button> -->
+    
+
+    <script type="importmap">
+        {
+            "imports": {
+            "three": "https://unpkg.com/three@0.145.0/build/three.module.js",
+            "GLTFLoader" : "https://unpkg.com/three@0.145.0/examples/jsm/loaders/GLTFLoader.js",
+            "OrbitControls" : "https://unpkg.com/three@0.145.0/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        
+        import * as THREE from 'three';
+        import {GLTFLoader} from 'GLTFLoader';
+        import {OrbitControls} from 'OrbitControls'; 
+        
+        // console. log (OrbitControls);
+
+        let scene = new THREE.Scene();
+        let renderer = new THREE.WebGLRenderer({
+            canvas : document.querySelector('#canvas'),
+            antialias: true
+        });
+
+        let camera = new THREE.PerspectiveCamera(15,1.8);
+        camera.position.set(120,250,330);
+        camera.lookAt(new THREE.Vector3(0,0,0));
+
+        function movehome(x,y,z,xx,yy,zz){
+            camera.position.set(x,y,z);
+            conrols.target.set(xx,yy,zz)
+            
+        }
+
+        scene.background = new THREE.Color('white');
+        let light = new THREE.AmbientLight('0xffffff',0.7);
+        scene.add(light);
+
+        let controls = new OrbitControls(camera, renderer.domElement);
+        controls.maxPolarAngle = Math.PI/2;
+        controls.mouseButtons= {
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.DOLLY
+        }
+        controls.update();
+
+        let loader = new GLTFLoader();
+        loader.load('/27_2k/Main.gltf', function(gltf){
+            scene.add(gltf.scene);
+            function animate(){
+                requestAnimationFrame(animate)
+                // gltf.scene.rotation.y+=0.003;
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+        });
+
+        // console.log(canvas)
+        
+
+        
+    
+
+    </script>
+
+</body>
+</html>
