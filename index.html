@@ -17,9 +17,10 @@
     <script type="importmap">
         {
             "imports": {
-            "three": "https://unpkg.com/three@0.145.0/build/three.module.js",
-            "GLTFLoader" : "https://unpkg.com/three@0.145.0/examples/jsm/loaders/GLTFLoader.js",
-            "OrbitControls" : "https://unpkg.com/three@0.145.0/examples/jsm/controls/OrbitControls.js"
+            "three": "https://unpkg.com/three@0.148.0/build/three.module.js",
+            "GLTFLoader" : "https://unpkg.com/three@0.148.0/examples/jsm/loaders/GLTFLoader.js",
+            "OrbitControls" : "https://unpkg.com/three@0.148.0/examples/jsm/controls/OrbitControls.js"
+            "Draco" : "https://unpkg.com/three@0.148.0/examples/jsm/libs/draco/"
             }
         }
     </script>
@@ -61,6 +62,10 @@
         controls.update();
 
         let loader = new GLTFLoader();
+        let dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('Draco');
+        loader.setDRACOLoader(dracoLoader);
+        
         loader.load('/test/29/untitled.gltf', function(gltf){
             scene.add(gltf.scene);
             function animate(){
